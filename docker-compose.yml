@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  silva:
+    container_name: silva
+    environment:
+    - OPENAI_API_KEY=${ENV_OPENAI_API_KEY}
+    - TELEGRAM_BOT_TOKEN=${ENV_TELEGRAM_BOT_TOKEN}
+    command: python3 bot.py
+    restart: always
+    build:
+      context: "."
+      dockerfile: Dockerfile
