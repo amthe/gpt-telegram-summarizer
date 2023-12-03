@@ -1,19 +1,15 @@
+# external libraries
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 
+# Initialize Router
 start_router = Router()
 
-
+# Telegram bot command /start that prints starting message with available commands
 @start_router.message(Command("start"))
 async def command_start_handler(message: Message) -> None:
-    """
-    This handler receives messages with `/start` command
-    """
-    # Most event objects have aliases for API methods that can be called in events' context
-    # For example if you want to answer to incoming message you can use `message.answer(...)` alias
-    # and the target chat will be passed to :ref:`aiogram.methods.send_message.SendMessage`
-    # method automatically or call API method directly via
-    # Bot instance: `bot.send_message(chat_id=message.chat.id, ...)`
-    print('test')
-    await message.answer(f"Hello, <b>{message.from_user.full_name}!</b>")
+    # create a message to send in chat
+    msg = f"Hello, <b>{message.from_user.full_name}!</b>"
+    # send a message
+    await message.answer(msg)
