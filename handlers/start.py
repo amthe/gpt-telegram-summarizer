@@ -15,4 +15,5 @@ async def command_start_handler(message: Message) -> None:
     # and the target chat will be passed to :ref:`aiogram.methods.send_message.SendMessage`
     # method automatically or call API method directly via
     # Bot instance: `bot.send_message(chat_id=message.chat.id, ...)`
+    print('test')
     await message.answer(f"Hello, <b>{message.from_user.full_name}!</b>")
