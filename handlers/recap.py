@@ -14,11 +14,15 @@ recap_router = Router()
 async def command_recap_handler(message: Message) -> None:
 
     try:
+        # Trying to get a list of records
+        buffer_list = chat_buffer.buffer_list
+        # Trying to get amount of records in a list
+        records = len(buffer_list)
         # Trying to read buffer list of messages
-        buffer_list = chat_buffer.buffer_list[-10:]
+        last_records = buffer_list[-10:]
         # message processed from buffer
-        msg = "Last 10 messages are: \n\n"
-        for item in buffer_list:
+        msg = f"Amount of records:{records} messages.\n\nLast 10 messages are: \n\n"
+        for item in last_records:
             msg += f'{item}\n\n'
         # replying to chat with processed message
         await message.answer(msg)

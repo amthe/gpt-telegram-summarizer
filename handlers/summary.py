@@ -16,7 +16,10 @@ async def command_summary_handler(message: Message) -> None:
     #This handler receives messages with /summary command
     try:
         # Trying to read buffer list of messages
-        buffer_list = chat_buffer.buffer_list[-20:]
+        buffer_list = chat_buffer.buffer_list
+
+        # buffer_list = chat_buffer.buffer_list[-20:]
+        
         # Converting buffer list into a string
         buffer_list = ''.join(buffer_list)
 
