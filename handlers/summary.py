@@ -14,24 +14,39 @@ summary_router = Router()
 @summary_router.message(Command("summary"))
 async def command_summary_handler(message: Message) -> None:
     #This handler receives messages with /summary command
-    try:
-        # Trying to read buffer list of messages
-        buffer_list = chat_buffer.buffer_list
+    user_id = message.from_user.id
+    chat_id = message.chat.id
 
-        # buffer_list = chat_buffer.buffer_list[-20:]
-        
-        # Converting buffer list into a string
-        buffer_list = ''.join(buffer_list)
-
+    if chat_id == user_id:
         try:
-            # Trying to pass string messages from buffer into summary function for processing
-            msg = gpt.summary(buffer_list)
-            # replying to chat with processed message
-            await message.answer(f'{msg}')
+            # Trying to read buffer list of all messages
+            buffer_full = chat_buffer.convert_buffer_to_string()
+            try:
+                # Trying to pass string messages from buffer into summary function for processing
+                msg = gpt.summary(buffer_full)
+                # replying to chat with processed message
+                await message.answer(f'{msg}')
+            except TypeError:
+                # replying to chat with Error message
+                await message.answer(f"Error summarizing:\n\n{buffer_full}")
+
         except TypeError:
             # replying to chat with Error message
-            await message.answer(f"Error summarizing:\n\n{buffer_list}")
+            await message.answer(f"Error reading buffer")
 
-    except TypeError:
-        # replying to chat with Error message
-        await message.answer(f"Error reading buffer")
+    elif chat_id in chat_buffer.buffer_dict:
+        try:
+            # Trying to read buffer list of specific chat messages
+            buffer_chat = chat_buffer.convert_chat_to_string(chat_id)
+            try:
+                # Trying to pass string messages from buffer into summary function for processing
+                msg = gpt.summary(buffer_chat)
+                # replying to chat with processed message
+                await message.answer(f'{msg}')
+            except TypeError:
+                # replying to chat with Error message
+                await message.answer(f"Error summarizing:\n\n{buffer_chat}")
+
+        except TypeError:
+            # replying to chat with Error message
+            await message.answer(f"Error reading buffer")             

@@ -131,11 +131,12 @@ def content_handler(message: types.Message) -> str:
 # Function that reads any message from a chat and trying to log it
 @chat_grab_router.message()
 async def chat_grab_handler(message: Message) -> None:
+    chat_id = message.chat.id
     logmsg = content_handler(message)
 
     try:
         # Trying to write message into memory
-        chat_buffer.buffer(logmsg)
+        chat_buffer.buffer(chat_id, logmsg)
 
     except TypeError:
         # replying to chat with Error message
