@@ -9,7 +9,7 @@ import getenv
 from handlers.summary import summary_router
 from handlers.chat_grab import chat_grab_router
 from handlers.start import start_router, delete_buffer_router
-from handlers.recap import recap_router
+from handlers.recap import recap_router, stats_router
 
 # Telegram Bot API Key
 TG_KEY = getenv.get_key('ENV_TELEGRAM_BOT_TOKEN')
@@ -24,6 +24,7 @@ async def main() -> None:
         start_router,
         delete_buffer_router,
         recap_router,
+        stats_router,
         summary_router,
         chat_grab_router,
     )

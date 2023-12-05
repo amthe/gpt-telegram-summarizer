@@ -1,5 +1,5 @@
 # external libraries
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
 
@@ -10,8 +10,11 @@ import chat_buffer
 # Initialize Router
 summary_router = Router()
 
+admin = (F.from_user.id == 145893019)
+admin_list = (F.from_user.id.in_({455872887, 145893019}))
+
 # Telegram bot command /summary that provides summary for a chat history from multiple chats
-@summary_router.message(Command("summary"))
+@summary_router.message(Command("summary"), admin_list)
 async def command_summary_handler(message: Message) -> None:
     #This handler receives messages with /summary command
     user_id = message.from_user.id
@@ -49,4 +52,12 @@ async def command_summary_handler(message: Message) -> None:
 
         except TypeError:
             # replying to chat with Error message
-            await message.answer(f"Error reading buffer")             
+            await message.answer(f"Error reading buffer")   
+
+
+# async def send_message_to_user(user_id: int, message: str):
+#     # Ben
+#     # user_id = 455872887
+#     # Panda
+#     # user_id = 145893019
+#     await bot.send_message(chat_id=145893019, text='test DM')     

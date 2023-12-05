@@ -22,13 +22,6 @@ def delete_chat(chat_id):
         # Delete the buffer of the corresponding chat ID
         del buffer_dict[chat_id]
 
-# Function to delete the entire buffer
-def delete_buffer():
-    global buffer_dict
-    
-    # Clear the buffer dictionary
-    buffer_dict.clear()
-
 # Function to get the number of chats stored in the buffer
 def get_num_chats():
     global buffer_dict
@@ -114,3 +107,19 @@ def get_recap_chat(chat_id):
             return "\n\n".join(buffer[-10:])
     else:
         return "Chat ID not found in buffer."
+
+# Function to delete the entire buffer
+def delete_buffer():
+    global buffer_dict
+    
+    # Clear the buffer dictionary
+    buffer_dict.clear()
+    
+def save_buffer():
+    pass    
+
+def load_buffer():
+    pass
+
+def send_buffer():
+    pass

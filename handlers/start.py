@@ -1,5 +1,5 @@
 # external libraries
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
 
@@ -9,25 +9,24 @@ import chat_buffer
 start_router = Router()
 delete_buffer_router = Router()
 
+admin = (F.from_user.id == 145893019)
+admin_list = (F.from_user.id.in_({455872887, 145893019}))
+
+
 # Telegram bot command /start that prints starting message with available commands
-@start_router.message(Command("start"))
+@delete_buffer_router.message(Command("start"), admin_list)
 async def command_start_handler(message: Message) -> None:
-    # create a message to send in chat
     msg = (f"Available commands:\n\n"
-          f"/recap - recap last 10 messages\n\n"
-          f"/summary - summarize chat\n\n"
-          f"/delete - clear buffer")
-    # send a message
+          f"/stats - shows number of saved messages\n\n"
+          f"/system - debug\n\n")
     await message.answer(msg)
 
-@delete_buffer_router.message(Command("delete"))
+# Telegram bot command /delete that clears bufer
+@delete_buffer_router.message(Command("delete"), admin_list)
 async def command_delete_buffer_handler(message: Message) -> None:
-
     try:
         chat_buffer.delete_buffer()
         msg = f"Buffer deleted"
     except TypeError:
-        # create a message to send in chat
         msg = f"Error deleting Buffer"
-    # send a message
     await message.answer(msg)
