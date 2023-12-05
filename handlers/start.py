@@ -17,8 +17,10 @@ admin_list = (F.from_user.id.in_({455872887, 145893019}))
 @delete_buffer_router.message(Command("start"), admin_list)
 async def command_start_handler(message: Message) -> None:
     msg = (f"Available commands:\n\n"
-          f"/stats - shows number of saved messages\n\n"
-          f"/system - debug\n\n")
+          f"/stats - shows number of saved messages.\n\n"
+          f"/recap - if send in chat, it makes a recap of messages of this chat. if send as pm, it makes a recap of all chats.\n\n"
+          f"/summary - if send in chat, it makes a summary of this chat. if send as pm, it makes a summary of all chats.\n\n"
+          f"/delete - delete all messages.\n\n")
     await message.answer(msg)
 
 # Telegram bot command /delete that clears bufer

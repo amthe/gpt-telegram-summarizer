@@ -11,7 +11,7 @@ async def schedule_job():
     while True:
         current_time = datetime.now(franconian_timezone)
         print(current_time)
-        target_time = current_time.replace(hour=5, minute=0, second=0, microsecond=0)
+        target_time = current_time.replace(hour=21, minute=31, second=0, microsecond=0)
 
         if current_time > target_time:
             target_time += timedelta(days=1)

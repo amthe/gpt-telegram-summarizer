@@ -19,6 +19,9 @@ async def command_recap_handler(message: Message) -> None:
     user_id = message.from_user.id
     chat_id = message.chat.id
 
+    # Bot is typing
+    await message.bot.send_chat_action(message.chat.id, 'typing')
+
     try:
         if chat_id == user_id:
             recap = chat_buffer.get_recap()
@@ -38,6 +41,9 @@ async def command_recap_handler(message: Message) -> None:
 async def command_stats_handler(message: Message) -> None:
     user_id = message.from_user.id
     chat_id = message.chat.id
+
+    # Bot is typing
+    await message.bot.send_chat_action(message.chat.id, 'typing')
 
     try:
         if chat_id == user_id:

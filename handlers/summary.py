@@ -20,6 +20,9 @@ async def command_summary_handler(message: Message) -> None:
     user_id = message.from_user.id
     chat_id = message.chat.id
 
+    # Bot is typing
+    await message.bot.send_chat_action(message.chat.id, 'typing')
+
     if chat_id == user_id:
         try:
             # Trying to read buffer list of all messages
