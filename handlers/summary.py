@@ -6,16 +6,20 @@ from aiogram.types import Message
 # local functions
 import gpt
 import chat_buffer
+import create_summary
 
 # Initialize Router
 summary_router = Router()
 
 admin = (F.from_user.id == 145893019)
-admin_list = (F.from_user.id.in_({455872887, 145893019}))
+admin_list = (F.from_user.id.in_({6829688825, 145893019}))
 
 # Telegram bot command /summary that provides summary for a chat history from multiple chats
 @summary_router.message(Command("summary"), admin_list)
 async def command_summary_handler(message: Message) -> None:
+
+    create_summary.create(message)
+
     #This handler receives messages with /summary command
     user_id = message.from_user.id
     chat_id = message.chat.id
