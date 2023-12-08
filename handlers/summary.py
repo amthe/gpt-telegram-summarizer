@@ -18,11 +18,13 @@ admin_list = (F.from_user.id.in_({6829688825, 145893019}))
 @summary_router.message(Command("summary"), admin_list)
 async def command_summary_handler(message: Message) -> None:
 
-    create_summary.create(message)
+    
 
     #This handler receives messages with /summary command
     user_id = message.from_user.id
     chat_id = message.chat.id
+
+    create_summary.create_summary_now()
 
     # Bot is typing
     await message.bot.send_chat_action(message.chat.id, 'typing')

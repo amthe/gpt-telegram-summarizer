@@ -1,5 +1,2 @@
-def create(message):
-    print("create summary")
-    print(message)
-    message.answer(f"Printing message")
-    return None
+def create_summary_now():
+    print("hello\n\n\n")
