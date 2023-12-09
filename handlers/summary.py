@@ -3,6 +3,9 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
 
+# Logging
+import logging
+
 # local functions
 import gpt
 import chat_buffer
@@ -18,13 +21,16 @@ admin_list = (F.from_user.id.in_({6829688825, 145893019}))
 @summary_router.message(Command("summary"), admin_list)
 async def command_summary_handler(message: Message) -> None:
 
-    
+    try:
+        logging.info("Trying to create summary with create_summary_now()")
+        create_summary.create_summary_now(message)
+    except Exception as e:
+        # Handle the exception here
+        await message.answer(f"Error :\n\n{e}")
 
     #This handler receives messages with /summary command
     user_id = message.from_user.id
     chat_id = message.chat.id
-
-    create_summary.create_summary_now()
 
     # Bot is typing
     await message.bot.send_chat_action(message.chat.id, 'typing')

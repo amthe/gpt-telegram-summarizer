@@ -1,2 +1,4 @@
-def create_summary_now():
-    print("hello\n\n\n")
+import logging
+
+def create_summary_now(message):
+    logging.info("Inside of create_summary_now()")
