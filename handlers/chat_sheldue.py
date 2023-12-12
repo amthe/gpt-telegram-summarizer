@@ -15,14 +15,14 @@ async def sheldue_msg(bot: Bot):
         franconian_timezone = timezone(timedelta(hours=1))  # UTC+1 for Franconia
         print(franconian_timezone)
         # msg = 'Test message'
-        user_id = 145893019
+        user_id = [145893019, 455872887]
 
         print("Sheldue task started")
 
         while True:
             current_time = datetime.now(franconian_timezone)
             print(f"Current time: {current_time}")
-            target_time = current_time.replace(hour=13, minute=40, second=10, microsecond=0)
+            target_time = current_time.replace(hour=5, minute=0, second=0, microsecond=0)
 
             if current_time > target_time:
                 target_time += timedelta(days=1)

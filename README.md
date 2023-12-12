@@ -12,9 +12,9 @@ https://github.com/yellalena/telegram-gpt-summarizer/tree/master
 
 ## Available commands
 - /stats - shows number of saved messages.
-- /recap - if send in chat, it makes a recap of messages of this chat. if send as pm, it makes a recap of all chats.
-- /summary - if send in chat, it makes a summary of this chat. if send as pm, it makes a summary of all chats.
-- /delete - delete all messages.
+- /save - saves buffer.
+- /load - loads buffer from previously saved.
+- /delete - clears buffer.
 
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file
