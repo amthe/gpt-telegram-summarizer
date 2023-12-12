@@ -8,5 +8,5 @@ later:
  - daily buffer delete after save
 
 killer feature: 
- - group link format identifier
- - change prompt to deal with group links to specific topics 
+ +- group link format identifier
+ +- change prompt to deal with group links to specific topics 

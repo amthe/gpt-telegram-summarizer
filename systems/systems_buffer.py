@@ -1,8 +1,11 @@
+# systems_buffer.py
+
+import json
 # Initialize buffer as a dictionary object
 buffer_dict = {}
 
 # Writing buffer function, accepts chat ID and string message, and appends the message to the corresponding buffer
-def buffer(chat_id, logmsg):
+def write_buffer(chat_id, logmsg):
     global buffer_dict
     
     # Check if the chat ID exists in the buffer dictionary
@@ -13,14 +16,32 @@ def buffer(chat_id, logmsg):
     # Append the logged string message to the buffer of the corresponding chat ID
     buffer_dict[chat_id].append(logmsg)
 
-# Function to delete a specific chat and its buffer
-def delete_chat(chat_id):
+# Function to convert all messages from a buffer into a single string
+def read_buffer():
     global buffer_dict
+    
+    # Initialize an empty string to store the combined messages
+    buffer_string = ""
+    
+    # Iterate over the buffer dictionary and concatenate all the messages
+    for chat_id in buffer_dict:
+        for logmsg in buffer_dict[chat_id]:
+            buffer_string += logmsg + "\n" 
+    return buffer_string
+
+# Function to convert a chosen chat from the buffer into a string
+def red_buffer_chat(chat_id):
+    global buffer_dict
+    
+    # Initialize an empty string to store the messages of the chosen chat
+    buffer_chat_string = ""
     
     # Check if the chat ID exists in the buffer dictionary
     if chat_id in buffer_dict:
-        # Delete the buffer of the corresponding chat ID
-        del buffer_dict[chat_id]
+        # Iterate over the messages of the chosen chat and concatenate them
+        for logmsg in buffer_dict[chat_id]:
+            buffer_chat_string += logmsg + "\n"
+    return buffer_chat_string
 
 # Function to get the number of chats stored in the buffer
 def get_num_chats():
@@ -42,7 +63,6 @@ def get_num_messages():
     
     return count
 
-
 # Function to count the number of messages in a specific chat
 def get_num_messages_in_chat(chat_id):
     global buffer_dict
@@ -54,36 +74,6 @@ def get_num_messages_in_chat(chat_id):
     else:
         # Return 0 if the chat ID does not exist
         return 0
-
-
-# Function to convert all messages from a buffer into a single string
-def convert_buffer_to_string():
-    global buffer_dict
-    
-    # Initialize an empty string to store the combined messages
-    combined_messages = ""
-    
-    # Iterate over the buffer dictionary and concatenate all the messages
-    for chat_id in buffer_dict:
-        for logmsg in buffer_dict[chat_id]:
-            combined_messages += logmsg + "\n"
-    
-    return combined_messages
-
-# Function to convert a chosen chat from the buffer into a string
-def convert_chat_to_string(chat_id):
-    global buffer_dict
-    
-    # Initialize an empty string to store the messages of the chosen chat
-    chat_messages = ""
-    
-    # Check if the chat ID exists in the buffer dictionary
-    if chat_id in buffer_dict:
-        # Iterate over the messages of the chosen chat and concatenate them
-        for logmsg in buffer_dict[chat_id]:
-            chat_messages += logmsg + "\n"
-    
-    return chat_messages
 
 # Function to retrieve the last 10 messages stored in a buffer as a string
 def get_recap():
@@ -107,6 +97,42 @@ def get_recap_chat(chat_id):
             return "\n\n".join(buffer[-10:])
     else:
         return "Chat ID not found in buffer."
+    
+# Function to save the buffer to a file
+def save_buffer(file_path='buffer.json'):
+    global buffer_dict
+    
+    try:
+        with open(file_path, 'w') as file:
+            # Save the buffer dictionary as JSON
+            json.dump(buffer_dict, file)
+        print(f"Buffer saved to {file_path}")
+    except Exception as e:
+        print(f"Error saving buffer: {e}")
+
+# Function to load the buffer from a file
+def load_buffer(file_path='buffer.json'):
+    global buffer_dict
+    
+    try:
+        with open(file_path, 'r') as file:
+            # Load the buffer dictionary from JSON
+            loaded_buffer = json.load(file)
+            buffer_dict.update(loaded_buffer)
+        print(f"Buffer loaded from {file_path}")
+    except FileNotFoundError:
+        print(f"No buffer file found at {file_path}")
+    except Exception as e:
+        print(f"Error loading buffer: {e}")
+
+# Function to delete a specific chat and its buffer
+def delete_buffer_chat(chat_id):
+    global buffer_dict
+    
+    # Check if the chat ID exists in the buffer dictionary
+    if chat_id in buffer_dict:
+        # Delete the buffer of the corresponding chat ID
+        del buffer_dict[chat_id]
 
 # Function to delete the entire buffer
 def delete_buffer():
@@ -114,12 +140,6 @@ def delete_buffer():
     
     # Clear the buffer dictionary
     buffer_dict.clear()
-    
-def save_buffer():
-    pass    
-
-def load_buffer():
-    pass
 
 def send_buffer():
     pass

@@ -1,38 +1,45 @@
-# external libraries
 import asyncio
 import logging
+from datetime import datetime, timedelta, timezone
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
-
-# local functions
-import getenv
-from handlers.summary import summary_router
+# Local
+from keys.getenv import get_key
 from handlers.chat_grab import chat_grab_router
-from handlers.start import start_router, delete_buffer_router
-from handlers.recap import recap_router, stats_router
+from handlers.chat_buffer import (
+    buffer_save_router,
+    buffer_load_router,
+    buffer_delete_router,
+    buffer_stats_router,
+)
+from handlers.chat_sheldue import sheldue_msg
 
 # Telegram Bot API Key
-TG_KEY = getenv.get_key('ENV_TELEGRAM_BOT_TOKEN')
+TG_KEY = get_key('ENV_TELEGRAM_BOT_TOKEN')
 
 
-# Main bot function
 async def main() -> None:
-    # Dispatcher is a root router
+    # Initialize Dispatcher as a root router
     dp = Dispatcher()
-    # Register all the routers from handlers package
+
+    # Register routers from handlers package
     dp.include_routers(
-        start_router,
-        delete_buffer_router,
-        recap_router,
-        stats_router,
-        summary_router,
+        buffer_save_router,
+        buffer_load_router,
+        buffer_delete_router,
+        buffer_stats_router,
         chat_grab_router,
     )
 
-    # Initialize Bot instance with a default parse mode which will be passed to all API calls
+    # Initialize Bot instance with a default parse mode
     bot = Bot(TG_KEY, parse_mode=ParseMode.HTML)
-    # And the run events dispatching
-    await dp.start_polling(bot)
+
+
+    # Run multiple tasks concurrently
+    await asyncio.gather(
+        dp.start_polling(bot),  # Run polling in one task
+        sheldue_msg(bot),  # Run sheldue_msg in another task
+    )
 
 
 if __name__ == "__main__":
