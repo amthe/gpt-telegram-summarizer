@@ -13,8 +13,7 @@ buffer_load_router = Router()
 buffer_delete_router = Router()
 buffer_stats_router = Router()
 
-admin = (F.from_user.id == 145893019)
-admin_list = (F.from_user.id.in_({455872887, 145893019}))
+admin_list = (F.from_user.id.in_({145893019, 6829688825}))
 
 # Telegram bot command /summary that provides summary for a chat history from multiple chats
 @buffer_save_router.message(Command("save"), admin_list)

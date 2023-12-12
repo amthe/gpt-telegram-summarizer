@@ -10,14 +10,14 @@ from systems.systems_buffer import save_buffer, delete_buffer
 from summary import get_summary
 
 
-async def sheldue_msg(bot: Bot):
+async def schedule_msg(bot: Bot):
     try:
         franconian_timezone = timezone(timedelta(hours=1))  # UTC+1 for Franconia
         print(franconian_timezone)
         # msg = 'Test message'
-        user_id = [145893019, 455872887]
+        user_id = [145893019, 6829688825]
 
-        print("Sheldue task started")
+        print("schedule task started")
 
         while True:
             current_time = datetime.now(franconian_timezone)
@@ -31,14 +31,14 @@ async def sheldue_msg(bot: Bot):
             print(f"Waiting for {wait_time} seconds")
             await asyncio.sleep(wait_time)
             save_buffer()
-            print(f"Buffer Saved in Sheldue process at: {current_time}")
+            print(f"Buffer Saved in schedule process at: {current_time}")
             msg = get_summary()
             await bot.send_message(chat_id=user_id, text=msg, parse_mode="HTML")
-            print(f'Sheldue message process completed at: {current_time}')
+            print(f'schedule message process completed at: {current_time}')
             delete_buffer()
-            print(f"Buffer deleted after Sheldue process at: {current_time}")
+            print(f"Buffer deleted after schedule process at: {current_time}")
     except Exception as e:
-        print(f"Error in sheldue_msg: {e}")
+        print(f"Error in schedule_msg: {e}")
 
 # Call the function to start the scheduled job
-# asyncio.run(sheldue_msg(Bot))
+# asyncio.run(schedule_msg(Bot))

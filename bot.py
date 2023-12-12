@@ -12,7 +12,7 @@ from handlers.chat_buffer import (
     buffer_delete_router,
     buffer_stats_router,
 )
-from handlers.chat_sheldue import sheldue_msg
+from handlers.chat_schedule import schedule_msg
 
 # Telegram Bot API Key
 TG_KEY = get_key('ENV_TELEGRAM_BOT_TOKEN')
@@ -38,7 +38,7 @@ async def main() -> None:
     # Run multiple tasks concurrently
     await asyncio.gather(
         dp.start_polling(bot),  # Run polling in one task
-        sheldue_msg(bot),  # Run sheldue_msg in another task
+        schedule_msg(bot),  # Run schedule_msg in another task
     )
 
 
