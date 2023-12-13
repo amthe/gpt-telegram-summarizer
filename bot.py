@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from datetime import datetime, timedelta, timezone
+from datetime import time
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 # Local
@@ -15,7 +15,10 @@ from handlers.chat_buffer import (
 from handlers.chat_schedule import schedule_msg
 
 # Telegram Bot API Key
-TG_KEY = get_key('ENV_TELEGRAM_BOT_TOKEN')
+TG_BOT_TOKEN = get_key('ENV_TELEGRAM_BOT_TOKEN')
+TG_USER_ID = get_key('ENV_TELEGRAM_USER_ID')
+# Set Timer
+TIMER = time(12, 51)
 
 
 async def main() -> None:
@@ -32,13 +35,13 @@ async def main() -> None:
     )
 
     # Initialize Bot instance with a default parse mode
-    bot = Bot(TG_KEY, parse_mode=ParseMode.HTML)
+    bot = Bot(TG_BOT_TOKEN, parse_mode=ParseMode.HTML)
 
 
     # Run multiple tasks concurrently
     await asyncio.gather(
         dp.start_polling(bot),  # Run polling in one task
-        schedule_msg(bot),  # Run schedule_msg in another task
+        schedule_msg(bot, TIMER, TG_USER_ID),  # Run schedule_msg in another task
     )
 
 

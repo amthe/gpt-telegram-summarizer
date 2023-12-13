@@ -1,4 +1,5 @@
 # external libraries
+import logging
 from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
@@ -23,11 +24,12 @@ async def command_buffer_save_handler(message: Message) -> None:
         # Trying to read buffer list of all messages
         save_buffer()
         msg = f'Buffer saved'
+        logging.info(msg)
 
     except Exception as e:
         msg = f"Error saving buffer: {e}"
+        logging.error(msg)
 
-    print(msg)
     await message.answer(msg)
 
 
@@ -38,11 +40,12 @@ async def command_buffer_load_handler(message: Message) -> None:
         # Trying to read buffer list of all messages
         load_buffer()
         msg = f'Buffer loaded'
+        logging.info(msg)
 
     except Exception as e:
         msg = f"Error loading buffer: {e}"
+        logging.error(msg)
             
-    print(msg)
     await message.answer(msg)
 
 
@@ -53,11 +56,12 @@ async def command_buffer_delete_handler(message: Message) -> None:
         # Trying to read buffer list of all messages
         delete_buffer()
         msg = f'Buffer deleted'
+        logging.info(msg)
 
     except Exception as e:
         msg = f"Error deleting buffer: {e}"
+        logging.error(msg)
             
-    print(msg)
     await message.answer(msg)
 
 
@@ -68,9 +72,10 @@ async def command_buffer_stats_handler(message: Message) -> None:
         # Trying to read buffer list of all messages
         
         msg = f'Number of stored chats: {get_num_chats()}\n\nNumber of stored messages: {get_num_messages()}\n'
+        logging.info(msg)
 
     except Exception as e:
         msg = f"Error deleting buffer: {e}"
-            
-    print(msg)
+        logging.error(msg)
+
     await message.answer(msg)

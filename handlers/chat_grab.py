@@ -1,5 +1,5 @@
 # chat_grab.py
-
+import logging
 from aiogram import Router, types
 from aiogram.types import Message
 #local
@@ -43,7 +43,7 @@ def get_content_type(message: types.Message) -> str:
 def handle_chat_message(message: types.Message) -> None:
     chat_info = get_chat_info(message.chat)
     user_info = get_user_info(message.from_user)
-    logmsg = f'{chat_info}\n{user_info}\nsend'
+    logmsg = f'\n{chat_info}\n{user_info}\nsend'
 
     if message.reply_to_message:
         replied_user_info = get_replied_user_info(message.reply_to_message.from_user)
@@ -56,10 +56,10 @@ def handle_chat_message(message: types.Message) -> None:
     try:
         # Trying to write message into memory
         write_buffer(message.chat.id, logmsg)
-        print(logmsg)
+        logging.debug(logmsg)
 
     except Exception as e:
-        print(f"Error writing to buffer: {e}")
+        logging.error(f"Error writing to buffer: {e}")
 
 # Register message handler
 @chat_grab_router.message()

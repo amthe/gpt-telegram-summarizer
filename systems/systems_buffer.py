@@ -1,5 +1,5 @@
 # systems_buffer.py
-
+import logging
 import json
 # Initialize buffer as a dictionary object
 buffer_dict = {}
@@ -106,9 +106,9 @@ def save_buffer(file_path='buffer.json'):
         with open(file_path, 'w') as file:
             # Save the buffer dictionary as JSON
             json.dump(buffer_dict, file)
-        print(f"Buffer saved to {file_path}")
+        logging.info(f"Buffer saved to {file_path}")
     except Exception as e:
-        print(f"Error saving buffer: {e}")
+        logging.error(f"Error saving buffer: {e}")
 
 # Function to load the buffer from a file
 def load_buffer(file_path='buffer.json'):
@@ -119,11 +119,11 @@ def load_buffer(file_path='buffer.json'):
             # Load the buffer dictionary from JSON
             loaded_buffer = json.load(file)
             buffer_dict.update(loaded_buffer)
-        print(f"Buffer loaded from {file_path}")
+        logging.info(f"Buffer loaded from {file_path}")
     except FileNotFoundError:
-        print(f"No buffer file found at {file_path}")
+        logging.info(f"No buffer file found at {file_path}")
     except Exception as e:
-        print(f"Error loading buffer: {e}")
+        logging.error(f"Error loading buffer: {e}")
 
 # Function to delete a specific chat and its buffer
 def delete_buffer_chat(chat_id):
