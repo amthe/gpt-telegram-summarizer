@@ -15,7 +15,7 @@ async def schedule_msg(bot: Bot, target_time: time, user_id: int):
         franconian_timezone = timezone(timedelta(hours=1))  # UTC+1 for Franconia
         while True:
             current_time = datetime.now(franconian_timezone)
-            logging.debug(f'*Sheldue task set: {current_time}')
+            logging.debug(f'*Schedule task set: {current_time}')
 
             # Use the provided target_time parameter
             target_datetime = datetime.combine(current_time.date(), target_time)
@@ -32,7 +32,7 @@ async def schedule_msg(bot: Bot, target_time: time, user_id: int):
             wait_time = (target_datetime - current_time).total_seconds()
             logging.info(f"Waiting for {wait_time} seconds")
             await asyncio.sleep(wait_time)
-            logging.info(f'\n\n+Sheldue task started: {current_time}\n')
+            logging.info(f'\n\n+Schedule task started: {current_time}\n')
             try:
                 save_buffer()
                 logging.debug(f"Buffer Saved in schedule process at: {current_time}")
@@ -59,7 +59,7 @@ async def schedule_msg(bot: Bot, target_time: time, user_id: int):
                 logging.debug(f"Buffer Deleted in schedule process at: {current_time}")
             except Exception as e:
                 logging.error(f"Error in Deleting buffer: {e}")
-            logging.info(f'\n\n-Sheldue task ended: {current_time}\n')
+            logging.info(f'\n\n-Schedule task ended: {current_time}\n')
 
     except Exception as e:
         logging.error(f"Error in schedule_msg: {e}")
