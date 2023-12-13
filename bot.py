@@ -18,7 +18,7 @@ from handlers.chat_schedule import schedule_msg
 TG_BOT_TOKEN = get_key('ENV_TELEGRAM_BOT_TOKEN')
 TG_USER_ID = get_key('ENV_TELEGRAM_USER_ID')
 # Set Timer
-TIMER = time(12, 51)
+TIMER = time(5, 0)
 
 
 async def main() -> None:
