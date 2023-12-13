@@ -26,8 +26,9 @@ To run this project, you will need to add the following environment variables to
 like this:
 
 ```dotenv .env
-ENV_OPENAI_API_KEY=
-ENV_TELEGRAM_BOT_TOKEN=
+ENV_OPENAI_API_KEY=sk-J3OSIP1T1qOhF
+ENV_TELEGRAM_BOT_TOKEN=69712:EopG2s
+ENV_TELEGRAM_USER_ID=68225
 ```
 
 ## Installation
