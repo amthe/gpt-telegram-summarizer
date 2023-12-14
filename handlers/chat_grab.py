@@ -10,7 +10,7 @@ chat_grab_router = Router()
 
 # Function to get chat information
 def get_chat_info(chat: types.Chat) -> str:
-    return f'In Chat [{chat.title} - ChatID:{chat.id}]'
+    return f'In Chat [{chat.title} - ChatID:{str(chat.id)[4:]}]'
 
 # Function to get user information
 def get_user_info(user: types.User) -> str:
@@ -55,7 +55,7 @@ def handle_chat_message(message: types.Message) -> None:
 
     try:
         # Trying to write message into memory
-        write_buffer(message.chat.id, logmsg)
+        write_buffer(str(message.chat.id)[4:], logmsg)
         logging.debug(logmsg)
 
     except Exception as e:
