@@ -11,25 +11,22 @@ model = "gpt-4-1106-preview"
 
 system_prompt = {'role': 'system', 'content': """
 You summarize a chatlog in english.
-Empty Messages is information you do not know and can only speculate.
+
+Empty Messages and content of media is information you do not know and can only speculate from context.
+Do not talk about empty messages in summary.
 Do not print UserID, ChatID or MessageID in summary.
-Always print User Name and Chat Name. 
-If Chat name is None call it Direct message. 
-Put names into square brackets like this [User Name]
-Split topics by empty line for readability.
-Beginning of each topic start with -
-
-You add links to important messages that define or start a topic like shown in the example.
-                                                                       
-Example: 
-[User Name] was talking about cars <a href="t.me/c/2101673397/41/">[1]</a> when [User Name] mentioned airplanes <a href="t.me/c/2101673397/49/">[2]</a>, then the conversation continued with airplanes for a while.
-
-to create a link combine t.me/c/ChatID/MessageID/ 
+Instead print *User Name* and *Chat Name*.
 
 Sort summarized text by Chat Name.
-Use timestamp to provide remarks about when conversation happened.
 
-Example of a message in a chat log: In Chat [None - ChatID:145893019] User [Red Panda - UserID:145893019] send [text message: "i had a great dinner with my wife tonight"] - [MessageID:19591]
+Split topics by Ordered List in markdown for readability.
+Sort topics by time like Morning, Day, Evening, Night etc.
+
+You add links to important messages that define or start a topic like shown in the example.                                                                      
+Example: 
+In the morning User Name was talking about cars [1](t.me/c/ChatID/MessageID/) when User Name mentioned airplanes [2](t.me/c/ChatID/MessageID/), then the conversation continued with airplanes for a while.
+
+to create a link combine t.me/c/ChatID/MessageID/
 """}
 
 # Summary function that accept any message string for summarizing

@@ -53,13 +53,15 @@ def handle_chat_message(message: types.Message) -> None:
     logmsg += get_content_type(message)
     logmsg += f'\n[MessageID:{message.message_id}]\n[Time:{message.date}]'
 
-    try:
-        # Trying to write message into memory
-        write_buffer(str(message.chat.id)[4:], logmsg)
-        logging.debug(logmsg)
+    if message.chat.id != message.from_user.id:
 
-    except Exception as e:
-        logging.error(f"Error writing to buffer: {e}")
+        try:
+            # Trying to write message into memory
+            write_buffer(str(message.chat.id)[4:], logmsg)
+            logging.info(logmsg)
+
+        except Exception as e:
+            logging.error(f"Error writing to buffer: {e}")
 
 # Register message handler
 @chat_grab_router.message()

@@ -6,22 +6,26 @@ from aiogram import Bot
 from aiogram.types import Message
 from aiogram.enums import ParseMode
 
-#local
+# local
 from systems.systems_buffer import save_buffer, delete_buffer
 from summary import get_summary
 
+
 async def schedule_msg(bot: Bot, target_time: time, user_id: int):
     try:
-        franconian_timezone = timezone(timedelta(hours=1))  # UTC+1 for Franconia
+        franconian_timezone = timezone(
+            timedelta(hours=1))  # UTC+1 for Franconia
         while True:
             current_time = datetime.now(franconian_timezone)
             logging.debug(f'*Schedule task set: {current_time}')
 
             # Use the provided target_time parameter
-            target_datetime = datetime.combine(current_time.date(), target_time)
+            target_datetime = datetime.combine(
+                current_time.date(), target_time)
 
             # Make target_datetime offset-aware
-            target_datetime = target_datetime.replace(tzinfo=franconian_timezone)
+            target_datetime = target_datetime.replace(
+                tzinfo=franconian_timezone)
 
             # Adjust target_datetime if it's in the past
             if current_time > target_datetime:
@@ -39,6 +43,7 @@ async def schedule_msg(bot: Bot, target_time: time, user_id: int):
             except Exception as e:
                 logging.error(f"Error in saving buffer: {e}")
             try:
+                await bot.send_chat_action(user_id, 'typing')
 
                 msg = get_summary()
                 logging.debug(f'getting summary results')
@@ -47,12 +52,12 @@ async def schedule_msg(bot: Bot, target_time: time, user_id: int):
                 logging.error(msg)
             try:
                 logging.debug(f'sending summary results to: {user_id}')
-                await bot.send_message(chat_id=user_id, text=msg, parse_mode="HTML")
+                await bot.send_message(user_id, msg)
                 logging.info(f'summary results sent to: {user_id}')
             except Exception as e:
                 msg = f"Error sending summary to {user_id}: {e}"
                 logging.error(msg)
-                await bot.send_message(chat_id=user_id, text=msg, parse_mode="HTML")
+                await bot.send_message(user_id, msg)
             logging.debug(f'schedule message process completed at: {current_time}')
             try:
                 delete_buffer()
