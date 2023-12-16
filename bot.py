@@ -6,13 +6,7 @@ from aiogram.enums import ParseMode
 # Local
 from keys.getenv import get_key
 from handlers.chat_grab import chat_grab_router
-from handlers.chat_buffer import (
-    buffer_save_router,
-    buffer_load_router,
-    buffer_delete_router,
-    buffer_stats_router,
-    buffer_summary_router,
-)
+from handlers.chat_buffer import buffer_router
 from handlers.chat_schedule import schedule_msg
 
 # Telegram Bot API Key
@@ -28,11 +22,7 @@ async def main() -> None:
 
     # Register routers from handlers package
     dp.include_routers(
-        buffer_save_router,
-        buffer_load_router,
-        buffer_delete_router,
-        buffer_stats_router,
-        buffer_summary_router,
+        buffer_router,
         chat_grab_router,
     )
 

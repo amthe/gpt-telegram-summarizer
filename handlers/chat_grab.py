@@ -1,29 +1,14 @@
-# chat_grab.py
 import logging
 from aiogram import Router, types
 from aiogram.types import Message
-#local
 from systems.systems_buffer import write_buffer
 
 # Initialize Router
 chat_grab_router = Router()
 
-# Function to get chat information
-def get_chat_info(chat: types.Chat) -> str:
-    return f'In Chat [{chat.title} - ChatID:{str(chat.id)[4:]}]'
-
-# Function to get user information
 def get_user_info(user: types.User) -> str:
-    return f'User [{user.full_name} - UserID:{user.id}]'
+    return f'User [{user.full_name or "Anonymous"} - UserID:{user.id}]'
 
-# Function to get replied user information
-def get_replied_user_info(reply_user: types.User) -> str:
-    if reply_user:
-        return f'User [{reply_user.first_name or ""} {reply_user.last_name or ""} - UserID:{reply_user.id}]'
-    else:
-        return '[Anonymous] user'
-
-# Function to get content type
 def get_content_type(message: types.Message) -> str:
     content_types = [
         f'[text message: "{message.text}"]' if message.text else '',
@@ -39,7 +24,12 @@ def get_content_type(message: types.Message) -> str:
     ]
     return ''.join(content_types)
 
-# Function to handle a chat message
+def get_replied_user_info(reply_user: types.User) -> str:
+    return f'User [{reply_user.full_name or "Anonymous"} - UserID:{reply_user.id}]' if reply_user else '[Anonymous] user'
+
+def get_chat_info(chat: types.Chat) -> str:
+    return f'In Chat [{chat.title or "Private Chat"} - ChatID:{str(chat.id)[4:]}]'
+
 def handle_chat_message(message: types.Message) -> None:
     chat_info = get_chat_info(message.chat)
     user_info = get_user_info(message.from_user)
@@ -54,7 +44,6 @@ def handle_chat_message(message: types.Message) -> None:
     logmsg += f'\n[MessageID:{message.message_id}]\n[Time:{message.date}]'
 
     if message.chat.id != message.from_user.id:
-
         try:
             # Trying to write message into memory
             write_buffer(str(message.chat.id)[4:], logmsg)
@@ -67,3 +56,4 @@ def handle_chat_message(message: types.Message) -> None:
 @chat_grab_router.message()
 async def chat_grab_handler(message: Message) -> None:
     handle_chat_message(message)
+
