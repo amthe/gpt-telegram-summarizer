@@ -7,7 +7,7 @@ from keys.getenv import get_key
 # Open AI API Key
 client = OpenAI(api_key=get_key('ENV_OPENAI_API_KEY'))
 # Choose GPT model
-model = "gpt-4-1106-preview"
+model = "gpt-3.5-turbo-1106"
 
 system_prompt = {'role': 'system', 'content': """
 You summarize a chatlog in english.
